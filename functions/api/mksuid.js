@@ -1,4 +1,4 @@
-import { extractQuery } from '../common/common'
+import { extractQuery } from "../common/common";
 
 export async function onRequest(context) {
     // Contents of context object
@@ -9,9 +9,9 @@ export async function onRequest(context) {
         waitUntil, // same as ctx.waitUntil in existing Worker API
         next, // used for middleware or to fetch assets
         data, // arbitrary space for passing data between middlewares
-    } = context
+    } = context;
 
-    const query = extractQuery(request.url.query)
+    const query = extractQuery(request.url.query);
 
-    return new Response('Hello, world!')
+    return new Response("Hello, world!");
 }

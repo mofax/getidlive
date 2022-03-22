@@ -1,5 +1,18 @@
 import { extractQuery, extractQueryParams } from "../common/common";
 
+function buf2hex(buffer) {
+    // buffer is an ArrayBuffer
+    return [...new Uint8Array(buffer)]
+        .map((x) => x.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+function randomValues(val = 10) {
+    const array = new Uint8Array(val);
+    crypto.getRandomValues(array);
+    return buf2hex(array.buffer);
+}
+
 export async function onRequest(context) {
     // Contents of context object
     const {
@@ -15,8 +28,8 @@ export async function onRequest(context) {
     const query = extractQuery(extractQueryParams(request.url));
 
     for (let i = 0; i < query.n; i++) {
-        const uuid = crypto.randomUUID();
-        values.push(uuid);
+        const id = randomValues(query.bytes);
+        values.push(id);
     }
 
     return new Response(values.join("\n"));
